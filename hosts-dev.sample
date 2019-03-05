@@ -1,0 +1,11 @@
+# hosts-dev (inventory file)
+
+[webservers]
+app1 ansible_host=ip1
+app2 ansible_host=ip2
+
+[loadbalancers]
+lb1 ansible_host=ip3
+
+[local]
+control ansible_connection=local
