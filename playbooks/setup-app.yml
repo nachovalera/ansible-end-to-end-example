@@ -7,6 +7,12 @@
     vars:
       path_to_app: "/var/www/html"
 
+    vars_prompt:
+      - name: "upload_var"
+        prompt: "Upload the index.php file? (yes/no)"
+      - name: "create_var"
+        prompt: "Create info.php page? (yes/no)"
+
     vars_files:
       - ../vars/secret-variables.yml
 
@@ -20,12 +26,14 @@
           src: ../index.php
           dest: "{{ path_to_app }}"
           mode: 0775
+        when: upload_var == 'yes'
         tags: upload
 
       - name: Create simple info page
         copy:
           dest: "{{ path_to_app }}/info.php"
           content: "<h1> Info about our webserver {{ ansible_hostname }}. These are changes.</h1>"
+        when: create_var == 'yes'
         tags: create
 
       - name: Configure php.ini file
